@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Propiedades - Presta Express</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f7f6; }
+        .form-container { background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn-presta { background-color: #f39200; border: none; color: white; }
+        .btn-presta:hover { background-color: #d88200; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 form-container p-4 p-md-5">
+            <h2 class="text-center mb-4">🏠 Formulario de Registro de Propiedades</h2>
+            <hr>
+            
+            <form id="odooForm">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Código de Propiedad</label>
+                        <input type="text" id="property_code" class="form-control" placeholder="_IAC-2026-ALTA-09" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre del Cliente</label>
+                        <input type="text" id="client_name" class="form-control" placeholder="JUAN CARLOS BÓ MAQUIN" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ubicación Completa</label>
+                    <input type="text" id="location" class="form-control" placeholder="Aldea Chiyaxut, San Pedro Carcha" required>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">Precio de Venta (Q)</label>
+                        <input type="number" id="price" class="form-control" placeholder="75000" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Área física (m2)</label>
+                        <input type="text" id="area" class="form-control" placeholder="1,323.00 m2">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Observaciones Adicionales</label>
+                    <textarea id="observations" class="form-control" rows="3" placeholder="Descripción del terreno, servicios, etc."></textarea>
+                </div>
+
+                <div id="statusMsg"></div>
+                <button type="submit" class="btn btn-presta w-100 py-3 mt-3 fw-bold">ENVIAR REGISTRO A ODOO</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Configuración de Servidor
+    const ODOO_URL = 'ESCRIBE_AQUI_TU_URL'; // Ej: https://prestaexpress.com.gt
+    const DB_NAME = 'ESCRIBE_AQUI_TU_DB'; 
+    const API_KEY = 'ESCRIBE_AQUI_TU_API_KEY';
+
+    document.getElementById('odooForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const status = document.getElementById('statusMsg');
+        
+        btn.disabled = true;
+        status.innerHTML = '<div class="alert alert-info">Enviando registro...</div>';
+
+        // Estructura de la descripción basada en tu plantilla
+        const descriptionBody = `
+            REGISTRO DE PROPIEDAD 2026
+            Código: ${document.getElementById('property_code').value}
+            Cliente: ${document.getElementById('client_name').value}
+            Ubicación: ${document.getElementById('location').value}
+            Área: ${document.getElementById('area').value}
+            Precio: Q ${document.getElementById('price').value}
+            Observaciones: ${document.getElementById('observations').value}
+        `;
+
+        const rpcPayload = {
+            jsonrpc: "2.0",
+            method: "call",
+            params: {
+                service: "object",
+                method: "execute_kw",
+                args: [
+                    DB_NAME, 
+                    2, // User ID (Suele ser 2 para admin, o usa el ID de tu usuario API)
+                    API_KEY,
+                    "helpdesk.ticket",
+                    "create",
+                    [{
+                        name: `Registro: ${document.getElementById('property_code').value}`,
+                        team_id: 1, // Tu ID de ticketera Soporte
+                        description: descriptionBody,
+                        partner_name: document.getElementById('client_name').value
+                    }]
+                ]
+            }
+        };
+
+        try {
+            const response = await fetch(`${ODOO_URL}/jsonrpc`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(rpcPayload)
+            });
+
+            const result = await response.json();
+
+            if (result.result) {
+                status.innerHTML = '<div class="alert alert-success">¡Ticket creado exitosamente en Odoo!</div>';
+                e.target.reset();
+            } else {
+                status.innerHTML = `<div class="alert alert-danger">Error: ${result.error.data.message}</div>`;
+            }
+        } catch (err) {
+            status.innerHTML = '<div class="alert alert-danger">Error de conexión. Revisa CORS o tu API Key.</div>';
+        } finally {
+            btn.disabled = false;
+        }
+    });
+</script>
+
+</body>
+</html>
