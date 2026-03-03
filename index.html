@@ -2,47 +2,92 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Propiedades - Presta Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Inmuebles - Presta Express</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f4f7f6; padding: 50px 0; }
-        .container { max-width: 600px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .btn-orange { background-color: #f39200; color: white; font-weight: bold; width: 100%; padding: 10px; border: none; }
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', sans-serif; padding-top: 50px; }
+        .form-card { max-width: 600px; margin: auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: none; overflow: hidden; }
+        .header { background-color: #f39200; color: white; padding: 25px; text-align: center; }
+        .btn-orange { background-color: #f39200; color: white; font-weight: bold; border: none; width: 100%; padding: 15px; }
         .btn-orange:hover { background-color: #d88200; color: white; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2 class="text-center mb-4" style="color: #f39200;">Registro de Inmuebles</h2>
+<div class="form-card">
+    <div class="header">
+        <h2 class="mb-0">🏠 REGISTRO DE PROPIEDADEssssssssssssS</h2>
+        <p class="mb-0 opacity-75">IT Management - Presta Express</p>
+    </div>
     
-    <form action="https://www.prestaexpress.com.gt/website/form/" method="post" enctype="multipart/form-data">
-        
-        <input type="hidden" name="model_name" value="helpdesk.ticket">
-        <input type="hidden" name="success_page" value="/contactus-thank-you">
-        <input type="hidden" name="team_id" value="1"> <div class="mb-3">
-            <label class="form-label">Asunto (Código de Propiedad)</label>
-            <input type="text" name="name" class="form-control" placeholder="Ej: _IAC-2026-ALTA-09" required>
-        </div>
+    <div class="p-4 p-md-5">
+        <form id="propForm">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Código de Propiedad</label>
+                <input type="text" id="codigo" class="form-control" placeholder="_IAC-2026-ALTA-09" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Nombre del Cliente</label>
-            <input type="text" name="partner_name" class="form-control" placeholder="Juan Carlos Bó Maquin" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Nombre del Cliente</label>
+                <input type="text" id="cliente" class="form-control" placeholder="Nombre completo" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Correo Electrónico</label>
-            <input type="email" name="partner_email" class="form-control" placeholder="cliente@correo.com" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Ubicación</label>
+                <input type="text" id="ubicacion" class="form-control" placeholder="Aldea Chiyaxut, San Pedro Carcha" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Descripción / Ubicación / Precio</label>
-            <textarea name="description" class="form-control" rows="5" placeholder="Indique la ubicación, área física y precio de venta..."></textarea>
-        </div>
+            <div class="mb-4">
+                <label class="form-label fw-bold">Precio (Q)</label>
+                <input type="number" id="precio" class="form-control" placeholder="75000" required>
+            </div>
 
-        <button type="submit" class="btn btn-orange">CREAR TICKET EN ODOO</button>
-    </form>
+            <div id="statusMsg"></div>
+            <button type="submit" id="btnSubmit" class="btn btn-orange text-uppercase">🚀 Enviar a Odoo</button>
+        </form>
+    </div>
 </div>
+
+<script>
+    // URL de tu "puente" en Google Apps Script
+    const GOOGLE_URL = 'https://script.google.com/macros/s/AKfycbxeFh40YSIeHZmFrXV6F0vnASSAeIEq3bnsxLUe90-_IC6DvcozTnrBUPj5AmfTrVGa/exec';
+
+    document.getElementById('propForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btnSubmit');
+        const status = document.getElementById('statusMsg');
+        
+        btn.disabled = true;
+        status.innerHTML = '<div class="alert alert-info">Sincronizando con Odoo...</div>';
+
+        const datos = {
+            codigo: document.getElementById('codigo').value,
+            cliente: document.getElementById('cliente').value,
+            ubicacion: document.getElementById('ubicacion').value,
+            precio: document.getElementById('precio').value
+        };
+
+        try {
+            // El modo 'no-cors' permite enviar los datos a Google sin bloqueos del navegador
+            await fetch(GOOGLE_URL, {
+                method: 'POST',
+                mode: 'no-cors', 
+                cache: 'no-cache',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+
+            // Con no-cors no podemos leer la respuesta de éxito, pero si no hay error, asumimos éxito
+            status.innerHTML = '<div class="alert alert-success">✅ ¡Registro enviado! Revisa tu ticketera en Odoo.</div>';
+            e.target.reset();
+        } catch (err) {
+            status.innerHTML = '<div class="alert alert-danger">❌ Error de conexión con el servidor.</div>';
+        } finally {
+            btn.disabled = false;
+        }
+    });
+</script>
 
 </body>
 </html>
