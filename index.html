@@ -6,94 +6,62 @@
     <title>Registro de Propiedades - Presta Express</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
-        .form-card { background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: none; }
-        .header-section { background-color: #f39200; color: white; border-radius: 15px 15px 0 0; padding: 25px; }
-        .section-title { color: #f39200; border-bottom: 2px solid #f39200; margin-bottom: 20px; padding-bottom: 5px; font-weight: bold; }
-        .btn-send { background-color: #f39200; color: white; border: none; padding: 15px; font-weight: bold; font-size: 1.1rem; }
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+        .form-card { background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: none; }
+        .header-bg { background-color: #f39200; color: white; border-radius: 12px 12px 0 0; padding: 25px; }
+        .btn-send { background-color: #f39200; color: white; border: none; font-weight: bold; padding: 15px; }
         .btn-send:hover { background-color: #d88200; color: white; }
+        .section-header { color: #f39200; border-bottom: 2px solid #f39200; margin-bottom: 20px; font-size: 0.9rem; font-weight: bold; }
     </style>
 </head>
 <body class="py-5">
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <div class="card form-card">
-                <div class="header-section text-center">
-                    <h2 class="mb-0">🏠 REGISTROaaaaaaaaaaaaaaaaa DE PROPIEDADES</h2>
-                    <p class="mb-0">Presta Express - IT Management</p>
+                <div class="header-bg text-center">
+                    <h2 class="mb-0">🏠 REGISTRsssssssssssssssO DE INMUEBLES</h2>
+                    <p class="mb-0 opacity-75">IT Management - Presta Express</p>
                 </div>
-                
                 <div class="card-body p-4 p-md-5">
                     <form id="propertyForm">
                         
-                        <div class="section-title text-uppercase small">🆔 Identificación</div>
+                        <div class="section-header text-uppercase">🆔 Identificación del Cliente</div>
                         <div class="row g-3 mb-4">
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Código de Propiedad</label>
+                                <label class="form-label fw-bold">Código de Propiedad</label>
                                 <input type="text" id="codigo" class="form-control" placeholder="_IAC-2026-ALTA-09" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold">Nombre del Cliente</label>
-                                <input type="text" id="cliente" class="form-control" placeholder="JUAN CARLOS BÓ MAQUIN" required>
+                                <label class="form-label fw-bold">Nombre del Cliente</label>
+                                <input type="text" id="cliente" class="form-control" placeholder="Nombre completo" required>
                             </div>
                         </div>
 
-                        <div class="section-title text-uppercase small">📍 Información General</div>
+                        <div class="section-header text-uppercase">📍 Ubicación y Costo</div>
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Ubicación Completa</label>
-                            <input type="text" id="ubicacion" class="form-control" placeholder="Aldea Chiyaxut, San Pedro Carcha" required>
+                            <label class="form-label fw-bold">Dirección Completa</label>
+                            <input type="text" id="ubicacion" class="form-control" required>
                         </div>
                         <div class="row g-3 mb-4">
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">Precio de Venta (Q)</label>
-                                <input type="number" id="precio" class="form-control" placeholder="75000" required>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Precio de Venta (Q)</label>
+                                <input type="number" id="precio" class="form-control" required>
                             </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">Área (m2)</label>
-                                <input type="text" id="area" class="form-control" placeholder="1,323.00 m2">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">Tipo de Propiedad</label>
-                                <select id="tipo" class="form-select">
-                                    <option value="Terreno">Terreno</option>
-                                    <option value="Casa">Casa</option>
-                                    <option value="Apartamento">Apartamento</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Área Física (m2)</label>
+                                <input type="text" id="area" class="form-control">
                             </div>
                         </div>
 
-                        <div class="section-title text-uppercase small">⚙️ Características y Servicios</div>
-                        <div class="row mb-4">
-                            <div class="col-md-12">
-                                <label class="form-label fw-semibold d-block">Servicios Disponibles:</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input srv" type="checkbox" value="Agua"> <label class="form-check-label">Agua</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input srv" type="checkbox" value="Luz"> <label class="form-check-label">Luz</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input srv" type="checkbox" value="Drenaje"> <label class="form-check-label">Drenaje</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input srv" type="checkbox" value="Garita"> <label class="form-check-label">Garita</label>
-                                </div>
-                            </div>
-                        </div>
-
+                        <div class="section-header text-uppercase">📝 Observaciones</div>
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">Observaciones / Puntos de Referencia</label>
-                            <textarea id="obs" class="form-control" rows="4" placeholder="Ej: Cerca de Mercado Comunal..."></textarea>
+                            <textarea id="obs" class="form-control" rows="4" placeholder="Detalles adicionales del inmueble..."></textarea>
                         </div>
 
                         <div id="statusMsg"></div>
-
-                        <button type="submit" id="btnSubmit" class="btn btn-send w-100 text-uppercase">
-                            🚀 Crear Ticket en Odoo
-                        </button>
+                        <button type="submit" id="btnSubmit" class="btn btn-send w-100 text-uppercase mt-2">Crear Registro en Odoo</button>
                     </form>
                 </div>
             </div>
@@ -102,12 +70,13 @@
 </div>
 
 <script>
-    // --- CONFIGURACIÓN DE TU ODOO ---
+    // CONFIGURACIÓN OFICIAL PRESTA EXPRESS
     const CONFIG = {
         url: 'https://www.prestaexpress.com.gt',
         db: 'prestaexpress.xetechs.net',
-        apiKey: '6c15e0feb080ef8fd60073839078ff568a9e5280', // Tu Clave "Inmuebles"
-        teamId: 1, // Tu Ticketera de Soporte
+        apiKey: '6c15e0feb080ef8fd60073839078ff568a9e5280', //
+        email: 'cristhian.cuxum@prestaexpress.com.gt',
+        teamId: 1, // Ticketera Soporte
         proxy: 'https://cors-anywhere.herokuapp.com/'
     };
 
@@ -117,77 +86,74 @@
         const status = document.getElementById('statusMsg');
         
         btn.disabled = true;
-        status.innerHTML = '<div class="alert alert-info">Enviando a Odoo...</div>';
-
-        // Recolectar servicios seleccionados
-        const servicios = Array.from(document.querySelectorAll('.srv:checked')).map(cb => cb.value).join(', ');
-
-        // Construir la descripción basada en tu plantilla de Word
-        const descripcionTicket = `
-            NUEVO REGISTRO DE PROPIEDAD
-            ===========================
-            IDENTIFICACIÓN:
-            - Código: ${document.getElementById('codigo').value}
-            - Cliente: ${document.getElementById('cliente').value}
-
-            DETALLES:
-            - Tipo: ${document.getElementById('tipo').value}
-            - Ubicación: ${document.getElementById('ubicacion').value}
-            - Área: ${document.getElementById('area').value}
-            - Precio: Q ${document.getElementById('precio').value}
-
-            SERVICIOS:
-            - ${servicios || 'Ninguno especificado'}
-
-            OBSERVACIONES:
-            ${document.getElementById('obs').value}
-        `;
-
-        const payload = {
-            jsonrpc: "2.0",
-            method: "call",
-            params: {
-                service: "object",
-                method: "execute_kw",
-                args: [
-                    CONFIG.db, 2, CONFIG.apiKey,
-                    "helpdesk.ticket", "create",
-                    [{
-                        name: `REGISTRO: ${document.getElementById('codigo').value} - ${document.getElementById('cliente').value}`,
-                        team_id: CONFIG.teamId,
-                        description: descripcionTicket,
-                        partner_name: document.getElementById('cliente').value
-                    }]
-                ]
-            }
-        };
+        status.innerHTML = '<div class="alert alert-info">🔄 Autenticando sesión...</div>';
 
         try {
-            const response = await fetch(CONFIG.proxy + CONFIG.url + '/jsonrpc', {
+            // 1. Obtener el UID del usuario de forma segura
+            const authRes = await fetch(CONFIG.proxy + CONFIG.url + '/jsonrpc', {
                 method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: JSON.stringify(payload)
+                headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                body: JSON.stringify({
+                    jsonrpc: "2.0", method: "call",
+                    params: { service: "common", method: "authenticate", args: [CONFIG.db, CONFIG.email, CONFIG.apiKey, {}] }
+                })
+            });
+            const authData = await authRes.json();
+            const uid = authData.result;
+
+            if (!uid) throw new Error("Acceso Denegado: Revisa el correo o la API Key.");
+
+            status.innerHTML = '<div class="alert alert-warning">🚀 Creando ticket en Odoo...</div>';
+
+            // 2. Crear el Ticket en el modelo helpdesk.ticket
+            const descripcion = `
+                REGISTRO DESDE WEB EXTERNA
+                --------------------------
+                Código: ${document.getElementById('codigo').value}
+                Cliente: ${document.getElementById('cliente').value}
+                Ubicación: ${document.getElementById('ubicacion').value}
+                Precio: Q${document.getElementById('precio').value}
+                Área: ${document.getElementById('area').value}
+                Observaciones: ${document.getElementById('obs').value}
+            `;
+
+            const createRes = await fetch(CONFIG.proxy + CONFIG.url + '/jsonrpc', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                body: JSON.stringify({
+                    jsonrpc: "2.0", method: "call",
+                    params: {
+                        service: "object", method: "execute_kw",
+                        args: [
+                            CONFIG.db, uid, CONFIG.apiKey,
+                            "helpdesk.ticket", "create",
+                            [{
+                                name: `INMUEBLE: ${document.getElementById('codigo').value}`,
+                                team_id: CONFIG.teamId,
+                                description: descripcion,
+                                partner_name: document.getElementById('cliente').value
+                            }]
+                        ]
+                    }
+                })
             });
 
-            const result = await response.json();
+            const result = await createRes.json();
 
             if (result.result) {
-                status.innerHTML = '<div class="alert alert-success">✅ ¡Excelente! Ticket creado en tu Odoo de Presta Express.</div>';
+                status.innerHTML = '<div class="alert alert-success">✅ ¡Excelente! El ticket ha sido creado en tu bandeja de Soporte.</div>';
                 e.target.reset();
             } else {
-                status.innerHTML = '<div class="alert alert-danger">❌ Error de Odoo: ' + result.error.data.message + '</div>';
+                status.innerHTML = `<div class="alert alert-danger">❌ Error de Odoo: ${result.error.data.message}</div>`;
             }
         } catch (err) {
             status.innerHTML = `
                 <div class="alert alert-warning">
-                    ⚠️ <b>Acceso necesario:</b> Para que GitHub pueda hablar con Odoo, debes activar el permiso temporal:
+                    ⚠️ <b>Acceso necesario:</b> Es probable que debas activar el proxy temporal:
                     <br><br>
-                    <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" class="btn btn-sm btn-dark">Haz clic aquí para activar</a>
+                    <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank" class="btn btn-sm btn-dark">Activar Acceso Aquí</a>
                     <br><br>
-                    Luego de darle al botón "Request access", regresa aquí y presiona Enviar de nuevo.
+                    Si ya lo activaste y el error persiste, verifica tus permisos en Odoo.
                 </div>`;
         } finally {
             btn.disabled = false;
